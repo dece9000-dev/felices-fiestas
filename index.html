@@ -1,0 +1,746 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Felices Fiestas 2025-2026</title>
+<style>
+  body {
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    overflow: hidden;
+    background: #000;
+    color: #fff;
+  }
+
+  section {
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 0;
+    left: 0;
+    flex-direction: column;
+    opacity: 0;
+    transition: opacity 1.5s ease-in-out;
+    text-align: center;
+    padding: 0 20px;
+    overflow: hidden;
+  }
+
+  section.active {
+    opacity: 1;
+    z-index: 1;
+  }
+
+  h1 {
+    font-size: 4rem;
+    margin: 0.5em 0;
+    text-shadow: 0 0 15px rgba(255,255,255,0.8), 2px 2px 10px #000;
+    animation: fadeInUp 1s ease forwards, pulseGlow 3s infinite alternate;
+    background: linear-gradient(45deg, #ffd700, #ffffff, #ffd700);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    background-size: 200% auto;
+    animation: textShine 3s linear infinite;
+  }
+
+  p {
+    font-size: 1.8rem;
+    margin: 0.5em 0;
+    max-width: 900px;
+    text-shadow: 1px 1px 8px rgba(0,0,0,0.8);
+    animation: fadeInUp 1.2s ease forwards, float 6s ease-in-out infinite;
+    padding: 15px;
+    border-radius: 10px;
+    background: rgba(0,0,0,0.3);
+    backdrop-filter: blur(5px);
+  }
+
+  /* Estrellas mejoradas */
+  .star {
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    background: radial-gradient(circle, #fff 30%, #ff0 70%);
+    border-radius: 50%;
+    animation: fallTwinkle 8s linear infinite;
+    filter: drop-shadow(0 0 8px #ff0);
+  }
+
+  .star:nth-child(odd) {
+    animation-duration: 10s;
+    background: radial-gradient(circle, #fff 30%, #ff6b6b 70%);
+  }
+
+  .star:nth-child(3n) {
+    animation-duration: 12s;
+    background: radial-gradient(circle, #fff 30%, #4ecdc4 70%);
+  }
+
+  /* Nuevo efecto: Copos de nieve */
+  .snowflake {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background: radial-gradient(circle, #ffffff 40%, transparent 70%);
+    border-radius: 50%;
+    filter: blur(1px);
+    animation: snowfall 15s linear infinite;
+  }
+
+  .snowflake:nth-child(2n) {
+    animation-duration: 20s;
+    width: 8px;
+    height: 8px;
+  }
+
+  .snowflake:nth-child(3n) {
+    animation-duration: 25s;
+    width: 12px;
+    height: 12px;
+    background: radial-gradient(circle, #e3f2fd 40%, transparent 70%);
+  }
+
+  /* Fuegos artificiales mejorados */
+  .firework {
+    position: absolute;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    opacity: 0;
+    filter: blur(1px);
+  }
+
+  /* Confeti mejorado */
+  .confetti {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    opacity: 0;
+    transform: rotate(45deg);
+    border-radius: 2px;
+  }
+
+  /* Luces navideñas */
+  .christmas-light {
+    position: absolute;
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    animation: lightTwinkle 1.5s infinite alternate;
+    filter: drop-shadow(0 0 10px currentColor);
+  }
+
+  /* Nombre sutil mejorado */
+  #nombreSutil {
+    position: absolute;
+    font-size: 20px;
+    color: rgba(129, 129, 129, 0.377);
+    font-weight: bold;
+    pointer-events: none;
+    text-shadow: 0 0 10px rgba(163, 150, 150, 0.301);
+    transition: all 2s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+    z-index: 9999;
+    padding: 5px 15px;
+    border-radius: 20px;
+    background: rgba(0,0,0,0.2);
+    backdrop-filter: blur(3px);
+  }
+
+  /* Botón interactivo mejorado */
+  #botonMensaje {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    background: linear-gradient(45deg, #00cc44, #ffcc00, #ff3366);
+    background-size: 300% 300%;
+    color: #000;
+    border: none;
+    border-radius: 50px;
+    padding: 18px 30px;
+    font-size: 20px;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 5px 20px rgba(255,255,255,0.2), 0 0 30px rgba(0,204,68,0.3);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    z-index: 10000;
+    animation: buttonGlow 2s infinite alternate;
+    overflow: hidden;
+  }
+
+  #botonMensaje::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    background: linear-gradient(45deg, #00cc44, #ffcc00, #ff3366, #00cc44);
+    background-size: 400% 400%;
+    z-index: -1;
+    filter: blur(10px);
+    opacity: 0;
+    transition: opacity 0.4s;
+    animation: gradientShift 3s linear infinite;
+  }
+
+  /* Mensaje oculto mejorado */
+  #mensajeOculto {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.8);
+    background: linear-gradient(135deg, rgba(0,0,0,0.9), rgba(0,40,60,0.9));
+    color: #fff;
+    padding: 40px;
+    border-radius: 20px;
+    text-align: center;
+    box-shadow: 0 0 50px rgba(255,215,0,0.5);
+    z-index: 10000;
+    max-width: 500px;
+    backdrop-filter: blur(10px);
+    border: 2px solid rgba(255,215,0,0.3);
+    animation: messagePulse 2s infinite alternate;
+  }
+
+  /* Animaciones mejoradas */
+  @keyframes fadeInUp {
+    0% { opacity: 0; transform: translateY(30px) scale(0.95); }
+    100% { opacity: 1; transform: translateY(0) scale(1); }
+  }
+
+  @keyframes textShine {
+    0% { background-position: 0% 50%; }
+    100% { background-position: 100% 50%; }
+  }
+
+  @keyframes pulseGlow {
+    0% { filter: drop-shadow(0 0 10px rgba(255,215,0,0.5)); }
+    100% { filter: drop-shadow(0 0 25px rgba(255,215,0,0.8)); }
+  }
+
+  @keyframes fallTwinkle {
+    0% { 
+      transform: translateY(-100px) translateX(0) rotate(0deg); 
+      opacity: 0; 
+    }
+    10% { opacity: 1; }
+    90% { opacity: 1; }
+    100% { 
+      transform: translateY(100vh) translateX(100px) rotate(720deg); 
+      opacity: 0; 
+    }
+  }
+
+  @keyframes snowfall {
+    0% { 
+      transform: translateY(-100px) translateX(0) rotate(0deg); 
+      opacity: 0; 
+    }
+    10% { opacity: 1; }
+    90% { opacity: 1; }
+    100% { 
+      transform: translateY(100vh) translateX(50px) rotate(360deg); 
+      opacity: 0; 
+    }
+  }
+
+  @keyframes lightTwinkle {
+    0% { opacity: 0.3; transform: scale(0.8); }
+    100% { opacity: 1; transform: scale(1.2); }
+  }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
+  }
+
+  @keyframes gradientShift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+
+  @keyframes buttonGlow {
+    0% { box-shadow: 0 5px 20px rgba(255,255,255,0.2), 0 0 30px rgba(0,204,68,0.3); }
+    100% { box-shadow: 0 5px 30px rgba(255,255,255,0.3), 0 0 40px rgba(255,204,0,0.4); }
+  }
+
+  @keyframes messagePulse {
+    0% { box-shadow: 0 0 50px rgba(255,215,0,0.5); }
+    100% { box-shadow: 0 0 70px rgba(255,215,0,0.8); }
+  }
+
+  /* Botón activar música mejorado */
+  #activarMusica {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    z-index: 1000;
+    cursor: pointer;
+    background: rgba(0,0,0,0.5);
+    transition: opacity 0.5s;
+  }
+
+  #activarMusica:hover {
+    opacity: 0.2;
+  }
+
+  /* Decoraciones de esquina */
+  .corner-decoration {
+    position: fixed;
+    width: 100px;
+    height: 100px;
+    z-index: 9998;
+    opacity: 0.3;
+  }
+
+  .corner-tl {
+    top: 20px;
+    left: 20px;
+    border-top: 3px solid gold;
+    border-left: 3px solid gold;
+  }
+
+  .corner-tr {
+    top: 20px;
+    right: 20px;
+    border-top: 3px solid gold;
+    border-right: 3px solid gold;
+  }
+
+  .corner-bl {
+    bottom: 20px;
+    left: 20px;
+    border-bottom: 3px solid gold;
+    border-left: 3px solid gold;
+  }
+
+  .corner-br {
+    bottom: 20px;
+    right: 20px;
+    border-bottom: 3px solid gold;
+    border-right: 3px solid gold;
+  }
+</style>
+</head>
+<body>
+
+<!-- Botón invisible para activar música -->
+<div id="activarMusica">🎵 Click para activar música 🎵</div>
+
+<!-- Decoraciones de esquina -->
+<div class="corner-decoration corner-tl"></div>
+<div class="corner-decoration corner-tr"></div>
+<div class="corner-decoration corner-bl"></div>
+<div class="corner-decoration corner-br"></div>
+
+<!-- Nombre sutil -->
+<div id="nombreSutil">DECA</div>
+
+<!-- Botón interactivo y mensaje oculto -->
+<button id="botonMensaje">🎁 Mensaje Secreto ✨</button>
+<div id="mensajeOculto">
+  <h3 style="text-align:center;color:gold;margin:0 0 10px 0;font-size:20px;">✨ Para Ti En Estas Fiestas ✨</h3>
+  
+  <p style="font-size:15px;line-height:1.5;text-align:center;margin:0 0 15px 0;">
+    <span style="color:#ff6b6b;">Querido amigo/a</span>,<br><br>
+    
+    Que estas fiestas te llenen de <span style="color:#ff0000;">amor</span> y el 2026 de <span style="color:#00ff00;">éxitos</span>. 🌟
+    
+    <br><br>
+    
+    <span style="display:block;background:rgba(255,215,0,0.1);padding:8px;border-radius:8px;margin:10px 0;font-size:14px;">
+      ✨ Que tengas un gran año<br>
+      ✨ Cuida tu salud ante todo<br>
+      ✨ Disfruta de los pequeños detalles
+    </span>
+    
+    <br>
+    
+    Con cariño,<br>
+    <span style="color:#ff6b6b;font-weight:bold;">💖 Dennis 💖</span>
+  </p>
+  
+
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+
+  /* ====== Crear secciones dinámicamente ====== */
+  const body = document.body;
+
+  const navidadSection = document.createElement('section');
+  navidadSection.id = 'navidad';
+  navidadSection.style.background = 'radial-gradient(circle at 30% 20%, #0a2a0a, #001a00)';
+  navidadSection.innerHTML = '<h1>🎄 Feliz Navidad 🎄</h1><p id="mensajeNavidad"></p>';
+
+  const anoSection = document.createElement('section');
+  anoSection.id = 'anonuevo';
+  anoSection.style.background = 'radial-gradient(circle at 70% 20%, #0a0a2a, #000033)';
+  anoSection.innerHTML = '<h1>🎆 Feliz Año Nuevo 2026 🎆</h1><p id="mensajeAnoNuevo"></p>';
+
+  body.appendChild(navidadSection);
+  body.appendChild(anoSection);
+
+  /* ====== Música de fondo ====== */
+  const musica = document.createElement('audio');
+  musica.id = 'musicaFondo';
+  musica.loop = true;
+  musica.src = 'musica/MUSICA-NAVIDEÑA.mp3';
+  body.appendChild(musica);
+
+  document.getElementById('activarMusica').addEventListener('click', () => {
+    musica.play().then(() => {
+      document.getElementById('activarMusica').style.opacity = '0';
+      setTimeout(() => {
+        document.getElementById('activarMusica').style.display = 'none';
+      }, 500);
+    }).catch(e => console.log("Autoplay bloqueado:", e));
+    
+    // Efecto visual al activar música
+    const activarBtn = document.getElementById('activarMusica');
+    activarBtn.style.transition = 'all 1s';
+    activarBtn.style.opacity = '1';
+    activarBtn.style.background = 'radial-gradient(circle, rgba(255,215,0,0.3), transparent)';
+    setTimeout(() => {
+      activarBtn.style.opacity = '0';
+    }, 1000);
+  });
+
+  /* ====== Mensajes ====== */
+  const mensajeNavidad = document.getElementById('mensajeNavidad');
+  const mensajeAnoNuevo = document.getElementById('mensajeAnoNuevo');
+
+  const mensajesNavidad = [
+    "Que la magia de la Navidad ilumine cada rincón de tu vida... ✨",
+    "Deseamos que estas fiestas estén llenas de risas y momentos inolvidables. 🎅",
+    "Que cada estrella que brille sea un deseo cumplido. ⭐",
+    "Disfruta la calidez, el amor y la paz de la Navidad. ❤️",
+    "Que cada regalo traiga alegría y cada abrazo recuerde lo afortunado que eres. 🎁",
+    "Que la luz de las velas ilumine tu camino. 🕯️",
+    "Que esta Navidad te encuentre rodeado de cariño. 🏡",
+    "Que el espíritu navideño despierte la gratitud en ti. 🙏",
+    "Que los momentos compartidos se conviertan en memorias preciosas. 📸",
+    "Deseo que cada corazón se llene de alegría y serenidad. 💝"
+  ];
+
+  const mensajesAnoNuevo = [
+    "Que el 2026 llegue cargado de nuevas oportunidades. 🚀",
+    "Deseamos un Año Nuevo lleno de energía positiva. ⚡",
+    "Que cada amanecer te traiga motivación y felicidad. 🌅",
+    "Recibe el Año Nuevo con esperanza, amor y gratitud. 🌈",
+    "Que este año sea un lienzo para tus sueños más grandes. 🎨",
+    "Deseo que cada día esté lleno de salud y alegría. 💪",
+    "Que los retos se conviertan en aprendizajes valiosos. 📚",
+    "Que cada relación se fortalezca con amor. 👨‍👩‍👧‍👦",
+    "Que la ilusión te inspire a perseguir lo que te hace feliz. 🌠",
+    "Que el 2026 traiga sorpresas bonitas e inolvidables. 🎊"
+  ];
+
+  /* ====== Estrellas mejoradas ====== */
+  for (let i = 0; i < 80; i++) {
+    const star = document.createElement('div');
+    star.classList.add('star');
+    star.style.left = Math.random() * window.innerWidth + 'px';
+    star.style.top = Math.random() * window.innerHeight + 'px';
+    star.style.animationDelay = Math.random() * 5 + 's';
+    navidadSection.appendChild(star);
+  }
+
+  /* ====== Copos de nieve ====== */
+  for (let i = 0; i < 40; i++) {
+    const snowflake = document.createElement('div');
+    snowflake.classList.add('snowflake');
+    snowflake.style.left = Math.random() * window.innerWidth + 'px';
+    snowflake.style.top = Math.random() * window.innerHeight + 'px';
+    snowflake.style.animationDelay = Math.random() * 10 + 's';
+    navidadSection.appendChild(snowflake);
+  }
+
+  /* ====== Luces navideñas ====== */
+  for (let i = 0; i < 20; i++) {
+    const light = document.createElement('div');
+    light.classList.add('christmas-light');
+    light.style.left = Math.random() * window.innerWidth + 'px';
+    light.style.top = Math.random() * (window.innerHeight / 2) + 'px';
+    light.style.animationDelay = Math.random() * 2 + 's';
+    const colors = ['#ff0000', '#00ff00', '#ffff00', '#ff00ff', '#00ffff'];
+    light.style.background = colors[Math.floor(Math.random() * colors.length)];
+    navidadSection.appendChild(light);
+  }
+
+  /* ====== Fuegos artificiales mejorados ====== */
+  function createFirework() {
+    const centerX = Math.random() * window.innerWidth;
+    const centerY = Math.random() * (window.innerHeight / 3);
+    const colors = ["#ff3f3f", "#fffd3f", "#3fff3f", "#3f3fff", "#ff3fff", "#3fffff"];
+    const particlesCount = 30 + Math.floor(Math.random() * 20);
+    
+    // Sonido de fuegos artificiales (opcional)
+    const fireworkSound = new Audio('https://assets.mixkit.co/sfx/preview/mixkit-fireworks-show-audio-3062.mp3');
+    fireworkSound.volume = 0.1;
+    fireworkSound.play().catch(e => console.log("Sonido no disponible"));
+
+    for (let i = 0; i < particlesCount; i++) {
+      const particle = document.createElement('div');
+      particle.classList.add('firework');
+      particle.style.left = centerX + 'px';
+      particle.style.top = centerY + 'px';
+      particle.style.width = particle.style.height = (4 + Math.random() * 6) + 'px';
+      particle.style.background = colors[Math.floor(Math.random() * colors.length)];
+      particle.style.boxShadow = `0 0 15px ${colors[Math.floor(Math.random() * colors.length)]}`;
+      
+      anoSection.appendChild(particle);
+
+      const angle = Math.random() * 2 * Math.PI;
+      const distance = 80 + Math.random() * 150;
+      const x = Math.cos(angle) * distance;
+      const y = Math.sin(angle) * distance;
+
+      particle.animate([
+        { 
+          transform: 'translate(0,0) scale(1)', 
+          opacity: 1,
+          filter: 'blur(0px)'
+        },
+        { 
+          transform: `translate(${x}px, ${y}px) scale(0.2)`, 
+          opacity: 0,
+          filter: 'blur(3px)'
+        }
+      ], { 
+        duration: 1200 + Math.random() * 800, 
+        easing: 'cubic-bezier(0.1, 0.8, 0.2, 1)' 
+      });
+
+      setTimeout(() => {
+        if (particle.parentNode === anoSection) {
+          anoSection.removeChild(particle);
+        }
+      }, 2000);
+    }
+  }
+
+  /* ====== Confeti mejorado ====== */
+  function createConfetti() {
+    const confetti = document.createElement('div');
+    confetti.classList.add('confetti');
+    confetti.style.left = Math.random() * window.innerWidth + 'px';
+    confetti.style.background = `hsl(${Math.random()*360},100%,75%)`;
+    confetti.style.boxShadow = `0 0 10px ${confetti.style.background}`;
+    anoSection.appendChild(confetti);
+    
+    const animations = [
+      `translateY(${window.innerHeight}px) rotate(720deg)`,
+      `translateY(${window.innerHeight}px) translateX(100px) rotate(360deg)`,
+      `translateY(${window.innerHeight}px) translateX(-100px) rotate(-360deg)`
+    ];
+    
+    confetti.animate([
+      { 
+        transform: 'translateY(0px) rotate(0deg)', 
+        opacity: 1 
+      },
+      { 
+        transform: animations[Math.floor(Math.random() * animations.length)], 
+        opacity: 0 
+      }
+    ], { 
+      duration: 4000 + Math.random() * 3000, 
+      easing: 'cubic-bezier(0.55, 0.085, 0.68, 0.53)' 
+    });
+    
+    setTimeout(() => {
+      if (confetti.parentNode === anoSection) {
+        anoSection.removeChild(confetti);
+      }
+    }, 7000);
+  }
+
+  /* ====== Nombre sutil mejorado ====== */
+  const nombre = document.getElementById('nombreSutil');
+  function moverNombre() {
+    const nuevoX = Math.random() * (window.innerWidth - 150);
+    const nuevoY = Math.random() * (window.innerHeight - 60);
+    const color = `hsl(${Math.random()*360}, 100%, 70%)`;
+    
+    nombre.style.left = nuevoX + 'px';
+    nombre.style.top = nuevoY + 'px';
+    nombre.style.color = color;
+    nombre.style.textShadow = `0 0 20px ${color}`;
+    nombre.style.transform = `rotate(${Math.random()*10 - 5}deg)`;
+    nombre.style.opacity = 0.3 + Math.random() * 0.5;
+  }
+  
+  setInterval(moverNombre, 3000);
+  moverNombre();
+
+  /* ====== Secuencia principal mejorada ====== */
+  async function secuenciaFestejos() {
+    while(true) {
+      // Transición a Navidad
+      navidadSection.style.opacity = '0';
+      anoSection.style.opacity = '0';
+      await new Promise(r => setTimeout(r, 1000));
+      
+      navidadSection.classList.add('active');
+      anoSection.classList.remove('active');
+      navidadSection.style.opacity = '1';
+
+      for(let i = 0; i < mensajesNavidad.length; i++) {
+        mensajeNavidad.textContent = mensajesNavidad[i];
+        mensajeNavidad.style.animation = 'none';
+        void mensajeNavidad.offsetWidth;
+        mensajeNavidad.style.animation = 'fadeInUp 1.5s ease forwards, float 6s ease-in-out infinite';
+        await new Promise(r => setTimeout(r, 4500));
+      }
+
+      // Transición a Año Nuevo
+      navidadSection.style.opacity = '0';
+      await new Promise(r => setTimeout(r, 1000));
+      
+      navidadSection.classList.remove('active');
+      anoSection.classList.add('active');
+      anoSection.style.opacity = '1';
+
+      const intervaloFireworks = setInterval(createFirework, 300);
+      const intervaloConfetti = setInterval(createConfetti, 200);
+
+      for(let i = 0; i < mensajesAnoNuevo.length; i++) {
+        mensajeAnoNuevo.textContent = mensajesAnoNuevo[i];
+        mensajeAnoNuevo.style.animation = 'none';
+        void mensajeAnoNuevo.offsetWidth;
+        mensajeAnoNuevo.style.animation = 'fadeInUp 1.5s ease forwards, float 6s ease-in-out infinite';
+        await new Promise(r => setTimeout(r, 4500));
+      }
+      
+      clearInterval(intervaloFireworks);
+      clearInterval(intervaloConfetti);
+    }
+  }
+
+  secuenciaFestejos();
+
+  /* ====== Botón interactivo mejorado ====== */
+  const boton = document.getElementById('botonMensaje');
+  const mensaje = document.getElementById('mensajeOculto');
+
+  function cerrarMensaje() {
+    let op = 1;
+    const fadeOut = setInterval(() => {
+      op -= 0.05;
+      mensaje.style.opacity = op;
+      mensaje.style.transform = `translate(-50%, -50%) scale(${0.8 + (1-op)*0.3})`;
+      if(op <= 0) {
+        clearInterval(fadeOut);
+        mensaje.style.display = 'none';
+      }
+    }, 20);
+  }
+
+  boton.addEventListener('click', () => {
+    if(mensaje.style.display === 'none') {
+      mensaje.style.display = 'block';
+      mensaje.style.opacity = '0';
+      mensaje.style.transform = 'translate(-50%, -50%) scale(0.7)';
+      
+      let op = 0;
+      const fadeIn = setInterval(() => {
+        op += 0.05;
+        mensaje.style.opacity = op;
+        mensaje.style.transform = `translate(-50%, -50%) scale(${0.7 + op*0.3})`;
+        if(op >= 1) {
+          clearInterval(fadeIn);
+          mensaje.style.transform = 'translate(-50%, -50%) scale(1)';
+        }
+      }, 20);
+    } else {
+      cerrarMensaje();
+    }
+  });
+
+  boton.addEventListener('mouseover', () => {
+    boton.style.transform = "scale(1.15) rotate(5deg)";
+    boton.style.backgroundSize = "400% 400%";
+    boton.style.boxShadow = "0 10px 35px rgba(255,255,255,0.4), 0 0 50px rgba(255,204,0,0.6)";
+    boton.style.filter = "brightness(1.2)";
+  });
+
+  boton.addEventListener('mouseout', () => {
+    boton.style.transform = "scale(1) rotate(0deg)";
+    boton.style.backgroundSize = "300% 300%";
+    boton.style.boxShadow = "0 5px 20px rgba(255,255,255,0.2), 0 0 30px rgba(0,204,68,0.3)";
+    boton.style.filter = "brightness(1)";
+  });
+
+  // Efecto de partículas al hacer hover en el botón
+  boton.addEventListener('mousemove', (e) => {
+    const rect = boton.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    
+    const particle = document.createElement('div');
+    particle.style.position = 'absolute';
+    particle.style.left = x + 'px';
+    particle.style.top = y + 'px';
+    particle.style.width = '4px';
+    particle.style.height = '4px';
+    particle.style.background = `hsl(${Math.random()*360}, 100%, 70%)`;
+    particle.style.borderRadius = '50%';
+    particle.style.pointerEvents = 'none';
+    boton.appendChild(particle);
+    
+    particle.animate([
+      { transform: 'scale(1)', opacity: 1 },
+      { transform: `scale(0) translate(${Math.random()*40-20}px, ${Math.random()*40-20}px)`, opacity: 0 }
+    ], { duration: 500, easing: 'ease-out' });
+    
+    setTimeout(() => particle.remove(), 500);
+  });
+
+  /* ====== Efecto de cursor mágico ====== */
+  document.addEventListener('mousemove', (e) => {
+    const trail = document.createElement('div');
+    trail.style.position = 'fixed';
+    trail.style.left = e.clientX + 'px';
+    trail.style.top = e.clientY + 'px';
+    trail.style.width = '6px';
+    trail.style.height = '6px';
+    trail.style.background = `hsl(${Math.random()*360}, 100%, 70%)`;
+    trail.style.borderRadius = '50%';
+    trail.style.pointerEvents = 'none';
+    trail.style.zIndex = '99999';
+    document.body.appendChild(trail);
+    
+    trail.animate([
+      { transform: 'scale(1)', opacity: 0.8 },
+      { transform: 'scale(0)', opacity: 0 }
+    ], { duration: 800, easing: 'ease-out' });
+    
+    setTimeout(() => trail.remove(), 800);
+  });
+
+  /* ====== Efecto de latido en el título ====== */
+  setInterval(() => {
+    const h1Elements = document.querySelectorAll('h1');
+    h1Elements.forEach(h1 => {
+      h1.style.animation = 'none';
+      void h1.offsetWidth;
+      h1.style.animation = 'fadeInUp 1s ease forwards, pulseGlow 3s infinite alternate, textShine 3s linear infinite';
+    });
+  }, 10000);
+
+});
+</script>
+</body>
+</html>
