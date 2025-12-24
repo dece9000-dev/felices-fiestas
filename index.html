@@ -331,6 +331,19 @@
     border-right: 3px solid gold;
   }
 </style>
+  <!-- Open Graph / Redes Sociales -->
+<meta property="og:title" content="🎄 Felices Fiestas ✨">
+<meta property="og:description" content="Un saludo especial para cerrar el año y empezar el próximo con buena energía 🎆">
+<meta property="og:image" content="https://dece9000-dev.github.io/felices-fiestas/feliz-navidad.png">
+<meta property="og:url" content="https://dece9000-dev.github.io/felices-fiestas/">
+<meta property="og:type" content="website">
+
+<!-- x -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="🎄 Felices Fiestas ✨">
+<meta name="twitter:description" content="Un saludo especial para cerrar el año y empezar el próximo con buena energía 🎆">
+<meta name="twitter:image" content="https://dece9000-dev.github.io/felices-fiestas/feliz-navidad.png">
+
 </head>
 <body>
 
@@ -479,7 +492,7 @@ document.addEventListener("DOMContentLoaded", () => {
     navidadSection.appendChild(light);
   }
 
-  /* ====== Fuegos artificiales mejorados ====== */
+  /* ====== Fuegos artificiales  ====== */
   function createFirework() {
     const centerX = Math.random() * window.innerWidth;
     const centerY = Math.random() * (window.innerHeight / 3);
@@ -531,7 +544,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  /* ====== Confeti mejorado ====== */
+  /* ====== Confeti  ====== */
   function createConfetti() {
     const confetti = document.createElement('div');
     confetti.classList.add('confetti');
@@ -567,7 +580,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }, 7000);
   }
 
-  /* ====== Nombre sutil mejorado ====== */
+  /* ====== Nombre sutil  ====== */
   const nombre = document.getElementById('nombreSutil');
   function moverNombre() {
     const nuevoX = Math.random() * (window.innerWidth - 150);
@@ -585,7 +598,7 @@ document.addEventListener("DOMContentLoaded", () => {
   setInterval(moverNombre, 3000);
   moverNombre();
 
-  /* ====== Secuencia principal mejorada ====== */
+  /* ====== Secuencia principal ====== */
   async function secuenciaFestejos() {
     while(true) {
       // Transición a Navidad
@@ -743,4 +756,5 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 </script>
 </body>
+
 </html>
